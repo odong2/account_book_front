@@ -1,0 +1,14 @@
+[*]
+# 기본 인코딩 설정
+charset = utf-8
+
+[*.{js, jsx, ts, tsx, vue}]
+# 들여쓰기 스타일: 공백
+indent_style = space
+# 들여쓰기 크기: 2칸
+indent_size = 2
+# 탭 너비 설정
+tab_width = 2
+# 트림 트레일링 화이트스페이스
+trim_trailing_whitespace = true
+insert_final_newline = true
