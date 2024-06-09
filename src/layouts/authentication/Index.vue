@@ -1,7 +1,12 @@
 <template>
   <v-app>
-    <v-main>
-      <v-container fluid>
+    <v-main
+      style="height:100vh"
+      class="indigo lighten-3 align-center"
+    >
+      <v-container
+        fluid
+      >
         <router-view />
       </v-container>
     </v-main>

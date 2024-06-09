@@ -1,9 +1,64 @@
 <template>
   <v-app>
-    <HeaderBar
-      :drawerprops="navValue"
-      @updateNavValue="updateNavValue"
-    />
+    <!-- 헤더바 -->
+    <v-app-bar
+      app
+      color="black"
+      dark
+    >
+      <v-app-bar-nav-icon
+        @click="updateNavValue"
+      />
+      <!-- 헤더바 왼쪽 영역  -->
+      <img
+        id="logoImg"
+        src="@/assets/logo.png"
+        style="height: 40px;"
+        class="logo"
+      >
+      <v-spacer />
+
+      <!-- 헤더바 오른쪽 영역  -->
+
+      <!-- 마이 메뉴 -->
+      <v-menu
+        bottom
+        absolute
+      >
+        <template #activator="{ on, attrs }">
+          <v-btn
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon>mdi-account-circle</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list
+          class="mt-5 rounded-l"
+          min-width="170px"
+        >
+          <v-list-item
+            v-for="item in menuItems"
+            :key="item.title"
+            disabled
+            @click="() => {}"
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title class="text-subtitle-2">
+                {{ item.title }}
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-app-bar>
+
     <!-- 사이드바  -->
     <v-navigation-drawer
       v-model="navValue"
@@ -22,9 +77,11 @@
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
-            Application
+            SpendSavvy  
           </v-list-item-title>
-          <v-list-item-subtitle> subtext </v-list-item-subtitle>
+          <v-list-item-subtitle>
+            지출은 현명하게, 절약
+          </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
@@ -35,7 +92,7 @@
         nav
       >
         <v-list-item
-          v-for="item in items"
+          v-for="item in sideItems"
           :key="item.title"
           linke
           :to="item.to"
@@ -64,37 +121,44 @@
 </template>
 
 <script>
-import HeaderBar from '@/components/HeaderBar.vue';
+import { mapState, mapMutations } from 'vuex';
+
+// const { mapState } = createNamespacedHelpers('menuApp');
 
 export default {
   name : 'DefaultLayout',
   components: {
-    HeaderBar
   },
-  data : () => ({
-    navValue: false,
-    gradient: 'rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)',
-    items: [
-      {title: 'Dashboard', icon: 'mdi-view-dashboard', to: '/'},
-      {title: 'Grid System', icon: 'mdi-image', to: '/grid-system'},
-      {title: 'Grid List Page', icon: 'mdi-image', to: '/grid-list-page'},
-      {title: 'Break Points', icon: 'mdi-image', to: '/break-point'},
-      {title: 'Thypography', icon: 'mdi-image', to: '/thypography'},
-      {title: 'TablesVue', icon: 'mdi-image', to: '/tables'},
-      {title: '로그인', icon: 'mdi-image', to: '/authentication/login'},
-      {title: '회원가입', icon: 'mdi-image', to: '/authentication/sign-up'},
-    ],
-    right: null,
-  }),
-  methods : {
-    updateNavValue(newValue){
-      this.navValue = newValue;
+  computed: {
+    ...mapState(
+      'menuApp',[ // 모듈 이름 추가
+        'navValue',
+        'sideItems',
+        'gradient',
+        'menuItems'
+      ]),
+  },
+  navValue: {
+    get() {
+      return this.$store.state.menuApp.navValue;
     },
+    set(newValue) {
+      this.store.commit('menuApp', newValue);
+    }
+  },
+  methods : {
+    ...mapMutations(
+      'menuApp',[
+        'updateNavValue'
+      ]),
   },
 
 };
 </script>
 
-<style>
+<style scoped>
+.v-main {
+  background-color: #f6f6f6;
+}
 
 </style>

@@ -1,7 +1,20 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib/framework';
+import dayjs from "dayjs";
+import { VCalendar, VDatePicker } from "vuetify/lib/components";
+import "dayjs/locale/ko";
 
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  components: {
+    VCalendar,
+    VDatePicker,
+  },
+  date: {
+    locale: "ko",
+  },
+});
+
+dayjs.locale('ko'); //
 
 export default new Vuetify({
   // 오버라이드하여 색상 변경 가능

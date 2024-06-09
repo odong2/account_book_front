@@ -1,65 +1,72 @@
 <template>
-  <v-container>
-    <v-form
-      ref="form"
-      v-model="valid"
-      lazy-validation
-    >
-      <v-text-field
-        v-model="name"
-        :rules="nameRules"
-        label="Id"
-        required
-      />
-      <v-text-field
-        v-model="password"
-        :rules="[rules.required, rules.min]"
-        :type="show1 ? 'text' : 'password'"
-        name="input-10-1"
-        label="Password"
-        counter
-        @click:append="show1 = !show1"
-      />
+  <v-main>
+    <v-container style="max-width: 550px;">
+      <v-row align="center">
+        <v-card class="pa-10 rounded-lg">
+          <div class="black--text h4 d-flex justify-center">
+            <p>로그인</p>
+          </div>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+          >
+            <v-text-field
+              v-model="name"
+              :rules="nameRules"
+              label="아이디"
+              name="id"
+              outlined
+              class="pa-2"
+              required
+              append-icon="mdi-account"
+            />
 
-      <v-select
-        v-model="select"
-        :items="items"
-        :rules="[v => !!v || 'Item is required']"
-        label="Item"
-        required
-      />
+            <v-text-field
+              v-model="password"
+              :rules="[rules.required, rules.min]"
+              :type="show1 ? 'text' : 'password'"
+              name="paasword"
+              label="비밀번호"
+              outlined
+              class="pa-2"
+              append-icon="mdi-lock-outline"
+              @click:append="show1 = !show1"
+            />
 
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[v => !!v || 'You must agree to continue!']"
-        label="로그인 상태 유지"
-      />
+            <v-checkbox
+              v-model="checkbox"
+              :rules="[v => !!v || 'You must agree to continue!']"
+              label="로그인 상태 유지"
+            />
 
-      <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        @click="validate"
-      >
-        Validate
-      </v-btn>
+            <v-btn
+              :disabled="!valid"
+              depressed
+              large
+              block
+              color="success"
+              class=" rounded-lg"
+              @click="validate"
+            >
+              로그인
+            </v-btn>
 
-      <v-btn
-        color="error"
-        class="mr-4"
-        @click="reset"
-      >
-        Reset Form
-      </v-btn>
-
-      <v-btn
-        color="warning"
-        @click="resetValidation"
-      >
-        Reset Validation
-      </v-btn>
-    </v-form>
-  </v-container>
+            <v-btn
+              color="primary"
+              depressed
+              large
+              block
+              class="mt-1 rounded-lg"
+              @click="resetValidation"
+            >
+              회원가입
+            </v-btn>
+          </v-form>
+        </v-card>
+      </v-row>
+    </v-container>
+  </v-main>
 </template>
 
 <script>

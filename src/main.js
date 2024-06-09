@@ -13,8 +13,10 @@ import { far } from "@fortawesome/free-regular-svg-icons";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 // vuetify
 import vuetify from "./plugins/vuetify";
-//router
+// router
 import router from "./router";
+// vuex
+import {store} from './store/store';
 
 Vue.config.productionTip = false;
 
@@ -30,6 +32,6 @@ library.add(fas, far, fab);
 new Vue({
   vuetify,
   router,
-  // store, // 축약 속성 store : store
+  store, // 축약 속성 store : store
   render: (h) => h(App),
 }).$mount("#app");
