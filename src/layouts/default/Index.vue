@@ -130,22 +130,22 @@ export default {
   components: {
   },
   computed: {
+    navValue : {
+      get() {
+        return this.$store.state.menuApp.navValue;
+      },
+      set(newValue) {
+        this.$store.commit('menuApp/updateNavValue', newValue);
+      }
+    },
     ...mapState(
       'menuApp',[ // 모듈 이름 추가
-        'navValue',
         'sideItems',
         'gradient',
         'menuItems'
       ]),
   },
-  navValue: {
-    get() {
-      return this.$store.state.menuApp.navValue;
-    },
-    set(newValue) {
-      this.store.commit('menuApp', newValue);
-    }
-  },
+
   methods : {
     ...mapMutations(
       'menuApp',[

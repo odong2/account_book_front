@@ -25,8 +25,8 @@ const getters = {
 };
 
 const mutations = {
-  updateNavValue : (state) => {
-    state.navValue = !state.navValue;
+  updateNavValue : (state, newValue) => {
+    state.navValue = newValue;
   },
 };
 
