@@ -7,7 +7,7 @@
       dark
     >
       <v-app-bar-nav-icon
-        @click="updateNavValue"
+        @click="updateNavValue(!navValue)"
       />
       <!-- 헤더바 왼쪽 영역  -->
       <img
