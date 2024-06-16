@@ -20,6 +20,7 @@
               dense
               class="pa-2"
               required
+              hide-details
               append-icon="mdi-account"
             />
 
@@ -33,46 +34,81 @@
               dense
               class="pa-2"
               append-icon="mdi-lock-outline"
+              hide-details
               @click:append="show1 = !show1"
             />
-
-            <v-checkbox
-              v-model="checkbox"
-              :rules="[v => !!v || 'You must agree to continue!']"
-              label="로그인 상태 유지"
-            />
+            <v-row class="pa-1 mb-3">
+              <v-col class="d-flex">
+                <v-checkbox
+                  v-model="checkbox1"
+                  label="자동 로그인"
+                  hide-details
+                />
+                <v-checkbox
+                  v-model="checkbox2"
+                  label="아이디 저장"
+                  class="ms-3"
+                  hide-details
+                />
+              </v-col>
+            </v-row>
 
             <v-btn
               :disabled="!valid"
               depressed
               large
               block
-              color="success"
-              class=" rounded-lg"
+              dark
+              class="orange accent-3 rounded-lg"
               @click="validate"
             >
               로그인
             </v-btn>
 
+            <v-row class="mt-1">
+              <v-col class="d-flex justify-end grey--text text-subtitle-2">
+                <a>아이디 찾기</a>
+              </v-col>
+              <v-col class="d-flex justify-start grey--text text-subtitle-2">
+                <a>비밀번호 찾기 </a>
+              </v-col>
+            </v-row>
+
+            <v-row>
+              <v-col class="d-flex justify-center">
+                <a
+                  class="me-2"
+                  @click="kakaoLogin()"
+                >
+                  <v-img
+                    id="logoImg"
+                    alt="카카오 로그인"
+                    src="@/assets/kakao.png"
+                    class="logo mt-1"
+                    width="50px"
+                  />              
+                </a>
+                <a @click="kakaoLogin()">
+                  <v-img
+                    id="logoImg"
+                    alt="네이버 로그인"
+                    src="@/assets/naver.png"
+                    class="logo mt-1"
+                    width="50px"
+                  />              
+                </a>
+              </v-col>
+            </v-row>
+
             <v-btn
-              color="primary"
               depressed
               large
               block
-              class="mt-1 rounded-lg"
+              class="mt-8 rounded-lg grey lighten-3"
               @click="resetValidation"
             >
               회원가입
             </v-btn>
-            
-            <a @click="kakaoLogin()">
-              <v-img
-                id="logoImg"
-                alt="카카오 로그인"
-                src="@/assets/kakao_login.png"
-                class="logo mt-1 rounded-lg"
-              />
-            </a>
           </v-form>
         </v-card>
       </v-row>
@@ -108,11 +144,14 @@ export default {
       'Item 3',
       'Item 4',
     ],
-    checkbox: false,
+    checkbox1: false,
+    checkbox2: false,
   }),
   computed: {
     ...mapState(
-      ['API_URL', 'HOST_URL'],
+      'authStore', [
+        'constants'
+      ]
     ),
   },
   methods: {
@@ -126,7 +165,7 @@ export default {
       this.$refs.form.resetValidation();
     },
     kakaoLogin() {
-      const redirect_uri = this.HOST_URL + '/auth/kakao/join';
+      const redirect_uri = `${this.constants.HOST_URL}/auth/kakao/join`;
       const clientId = '16dc5d22956229c5bba702cb65e7399b';
       const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
       window.location.href = Auth_url;

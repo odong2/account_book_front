@@ -1,4 +1,5 @@
-import { axiosInstance, HOST_URL } from "@/apis/index.js";
+import { axiosInstance } from "@/apis/index.js";
+import { Constant } from "@/constants/constant.js";
 
 const api = axiosInstance;
 
@@ -26,10 +27,9 @@ const apiRequest = {
             "Content-Type": "application/json",
           },
         })
-        .then((response) => {
-          console.log(response);
+        .then(() => {
           // 로그인 후 메인 페이지 이동
-          window.location.href = HOST_URL;
+          window.location.href = `${Constant.HOST_URL}`;
         })
         .catch((error) => {
           console.error("Error submitting form:", error);
@@ -37,32 +37,37 @@ const apiRequest = {
     }
     // 회원가입 하지 않은 계정
     else {
-      // 회원가입 하지 않은 계정 처리
+      // 소셜 회원 정보
       const signupData = {
         id: resData.data.id,
         nickname: resData.data.name,
         email: resData.data.email,
         token: resData.data.accessToken,
         provider: resData.data.provider,
+        profileImage : resData.data.profileImage
       };
 
       // 회원가입 정보 로컬스토리지에 저장
       localStorage.setItem("signupUser", JSON.stringify(signupData));
 
-      window.location.href = `${HOST_URL}/auth/social/sign-up`;
+      window.location.href = `${Constant.HOST_URL}/auth/social/sign-up`;
     }
   },
 
-  // 회원가입 요청
-  signup(formData) {
+  // 소셜 회원가입 요청
+  socialSignup(socialFormData) {
     api
-      .post("/v1/oauth/social/sign-up", JSON.stringify(formData), {
+      .post("/v1/oauth/social/sign-up", JSON.stringify(socialFormData), {
         headers: {
           "Content-Type": "application/json",
         },
       })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
+        // 로컬 스토리지 초기화
+        localStorage.clear("signupUser");
+        alert("회원가입을 축하합니다. 로그인페이지로 이동합니다.");
+        // 로그인 페이지로 이동 (추후 바로 로그인 처리)
+        window.location.href = `${Constant.HOST_URL}/auth/login`;
       })
       .catch((error) => {
         console.error("Error submitting form:", error);

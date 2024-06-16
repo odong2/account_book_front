@@ -123,7 +123,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
 
-// const { mapState } = createNamespacedHelpers('menuApp');
+// const { mapState } = createNamespacedHelpers('menuStore');
 
 export default {
   name : 'DefaultLayout',
@@ -132,14 +132,14 @@ export default {
   computed: {
     navValue : {
       get() {
-        return this.$store.state.menuApp.navValue;
+        return this.$store.state.menuStore.navValue;
       },
       set(newValue) {
-        this.$store.commit('menuApp/updateNavValue', newValue);
+        this.$store.commit('menuStore/updateNavValue', newValue);
       }
     },
     ...mapState(
-      'menuApp',[ // 모듈 이름 추가
+      'menuStore',[ // 모듈 이름 추가
         'sideItems',
         'gradient',
         'menuItems'
@@ -148,7 +148,7 @@ export default {
 
   methods : {
     ...mapMutations(
-      'menuApp',[
+      'menuStore',[
         'updateNavValue'
       ]),
   },
