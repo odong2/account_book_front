@@ -1,5 +1,5 @@
 const state = {
-  navValue: false, // 사이드바 on, off
+  navValue: true, // 사이드바 on, off
   gradient: "rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)",
   sideItems: [
     { title: "Calendar", icon: "mdi-calendar-month-outline", to: "/calendar" },
@@ -8,8 +8,8 @@ const state = {
     { title: "Break Points", icon: "mdi-image", to: "/break-point" },
     { title: "Thypography", icon: "mdi-image", to: "/thypography" },
     { title: "TablesVue", icon: "mdi-image", to: "/tables" },
-    { title: "로그인", icon: "mdi-image", to: "/authentication/login" },
-    { title: "회원가입", icon: "mdi-image", to: "/authentication/sign-up" },
+    { title: "로그인", icon: "mdi-image", to: "/auth/login" },
+    { title: "회원가입", icon: "mdi-image", to: "/auth/sign-up" },
   ],
   menuItems: [
     { title: "회원 아이디", icon: "mdi-account" },

@@ -17,8 +17,17 @@ import vuetify from "./plugins/vuetify";
 import router from "./router";
 // vuex
 import {store} from './store/store';
+import axios from 'axios';
 
 Vue.config.productionTip = false;
+
+const axiosService = axios.create({
+  baseURL: process.env.VUE_APP_API_URL,
+});
+
+// axios
+Vue.prototype.$axios = axiosService;
+Vue.prototype.$axios = axios;
 
 // 부트스트랩 사용 설정
 Vue.use(BootstrapVue);
@@ -35,3 +44,4 @@ new Vue({
   store, // 축약 속성 store : store
   render: (h) => h(App),
 }).$mount("#app");
+

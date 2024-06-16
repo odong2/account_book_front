@@ -1,6 +1,6 @@
 <template>
   <v-main>
-    <v-container style="max-width: 550px;">
+    <v-container style="max-width: 400px;">
       <v-row align="center">
         <v-card class="pa-10 rounded-lg">
           <div class="black--text h4 d-flex justify-center">
@@ -17,6 +17,7 @@
               label="아이디"
               name="id"
               outlined
+              dense
               class="pa-2"
               required
               append-icon="mdi-account"
@@ -29,6 +30,7 @@
               name="paasword"
               label="비밀번호"
               outlined
+              dense
               class="pa-2"
               append-icon="mdi-lock-outline"
               @click:append="show1 = !show1"
@@ -62,6 +64,15 @@
             >
               회원가입
             </v-btn>
+            
+            <a @click="kakaoLogin()">
+              <v-img
+                id="logoImg"
+                alt="카카오 로그인"
+                src="@/assets/kakao_login.png"
+                class="logo mt-1 rounded-lg"
+              />
+            </a>
           </v-form>
         </v-card>
       </v-row>
@@ -70,6 +81,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   data: () => ({
     show1: false,
@@ -97,7 +110,11 @@ export default {
     ],
     checkbox: false,
   }),
-
+  computed: {
+    ...mapState(
+      ['API_URL', 'HOST_URL'],
+    ),
+  },
   methods: {
     validate () {
       this.$refs.form.validate();
@@ -108,10 +125,15 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation();
     },
+    kakaoLogin() {
+      const redirect_uri = this.HOST_URL + '/auth/kakao/join';
+      const clientId = '16dc5d22956229c5bba702cb65e7399b';
+      const Auth_url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirect_uri}`;
+      window.location.href = Auth_url;
+    }
   },
 };
 </script>
 
-<style>
-
+<style >
 </style>

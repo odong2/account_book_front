@@ -1,0 +1,8 @@
+// Vuetify의 SCSS 변수를 재정의하여 폰트를 적용
+$body-font-family: 'Noto Sans KR', sans-serif;
+$heading-font-family: 'Noto Sans KR', sans-serif;
+
+// vuetify 라벨 크기 설정
+$label-font-size: 14px;
+
+@import '~vuetify/src/styles/styles.sass';

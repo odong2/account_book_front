@@ -2,7 +2,7 @@
   <v-app>
     <v-main
       style="height:100vh"
-      class="indigo lighten-3 align-center"
+      class="align-center"
     >
       <v-container
         fluid
@@ -16,10 +16,11 @@
 <script>
 export default {
   name: 'AuthenticationLayout'
-
 };
 </script>
 
 <style>
-
+.v-main {
+  background-color: #f6f6f6;
+}
 </style>

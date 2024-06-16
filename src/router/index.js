@@ -6,8 +6,9 @@ import BreakPoint from '@/views/BreakPoints';
 import Thypography from '@/views/ThypoGraphy';
 import TablesVue from '@/views/TablesVue';
 import Login from '@/views/authentication/Login';
-import Signup from "@/views/authentication/Signup";
+import SocialSignup from "@/views/authentication/SocialSignup";
 import Calendar from '@/views/Calendar';
+import Kakaojoin from '@/views/authentication/Kakaojoin';
 import DefaultLayout from '@/layouts/default/Index';
 import AuthenticationLayout from '@/layouts/authentication/Index';
 Vue.use(VueRouter);
@@ -15,7 +16,7 @@ Vue.use(VueRouter);
 const routes = [
   // 로그인, 회원가입
   {
-    path: "/authentication",
+    path: "/auth",
     component: AuthenticationLayout,
     children: [
       {
@@ -24,9 +25,14 @@ const routes = [
         component: Login,
       },
       {
-        path: "sign-up",
+        path: "social/sign-up",
         name: "회원가입",
-        component: Signup,
+        component: SocialSignup,
+      },
+      {
+        path: "kakao/join",
+        name: "카카오",
+        component: Kakaojoin,
       },
     ],
   },
