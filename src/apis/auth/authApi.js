@@ -3,39 +3,54 @@ import { axiosInstance, HOST_URL } from "@/apis/index.js";
 const api = axiosInstance;
 
 const apiRequest = {
-
   // 카카오 회원 정보 요청(로그인)
-  loginFromKakao(code) {
-    // axios 에서는 API 서버 api로 호출
-    api
-      .get("/v1/oauth/info/kakao?code=" + code)
-      .then((res) => {
-        let obj = res.data;
+  loginFromKakao: async (code) => {
+    let socialData = {};
 
-        // 이미 회원가입한 계정 로그인 처리
-        if (obj.data.existMember === true) {
-          localStorage.clear; // 로컬스토리지 정보 초기화
-          localStorage.setItem('loginUser', JSON.stringify(obj.data));
+    // 소셜 회원 정보 요청
+    const response = await api.get(`/v1/oauth/info/kakao?code=${code}`);
+    const resData = response.data;
+
+    if (resData.data.isExistMember === true) {
+      // 이미 회원가입한 계정 로그인 처리
+      localStorage.clear(); // 로컬스토리지 정보 초기화
+      socialData = {
+        id: resData.data.id,
+        provider: resData.data.provider,
+        accessToken: resData.data.accessToken,
+      };
+      // 로그인
+      await api
+        .post("/v1/login/social", JSON.stringify(socialData), {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          // 로그인 후 메인 페이지 이동
           window.location.href = HOST_URL;
-        }
+        })
+        .catch((error) => {
+          console.error("Error submitting form:", error);
+        });
+    }
+    // 회원가입 하지 않은 계정
+    else {
+      // 회원가입 하지 않은 계정 처리
+      const signupData = {
+        id: resData.data.id,
+        nickname: resData.data.name,
+        email: resData.data.email,
+        token: resData.data.accessToken,
+        provider: resData.data.provider,
+      };
 
-        // 회원가입 하지 않은 계정
-        else {
-          const data = {
-            id: obj.data.id,
-            nickname: obj.data.name,
-            email: obj.data.eamil,
-            token: obj.data.accessToken,
-            provider: obj.data.provider
-          };
-          const signupUser = JSON.stringify(data);
-          localStorage.setItem("signupUser", signupUser);
+      // 회원가입 정보 로컬스토리지에 저장
+      localStorage.setItem("signupUser", JSON.stringify(signupData));
 
-          window.location.href = HOST_URL + '/auth/social/sign-up';
-        }
-      }).catch((err) => {
-        console.log(err);
-      });
+      window.location.href = `${HOST_URL}/auth/social/sign-up`;
+    }
   },
 
   // 회원가입 요청
@@ -43,7 +58,7 @@ const apiRequest = {
     api
       .post("/v1/oauth/social/sign-up", JSON.stringify(formData), {
         headers: {
-          "Content-Type": "application/json", // 올바른 Content-Type 설정
+          "Content-Type": "application/json",
         },
       })
       .then((response) => {
@@ -52,6 +67,9 @@ const apiRequest = {
       .catch((error) => {
         console.error("Error submitting form:", error);
       });
-  }
+  },
+
+  loginKakao: async () => {},
 };
+
 export { apiRequest };
