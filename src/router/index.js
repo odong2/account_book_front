@@ -5,12 +5,12 @@ import GridListPage from '@/views/GridListPage';
 import BreakPoint from '@/views/BreakPoints';
 import Thypography from '@/views/ThypoGraphy';
 import TablesVue from '@/views/TablesVue';
-import Login from '@/views/authentication/Login';
-import SocialSignup from "@/views/authentication/SocialSignup";
+import Login from '@/views/auth/Login';
+import SocialSignup from "@/views/auth/SocialSignup";
+import Kakaojoin from "@/views/auth/Kakaojoin";
+import AuthenticationLayout from "@/layouts/auth/Index";
 import Calendar from '@/views/Calendar';
-import Kakaojoin from '@/views/authentication/Kakaojoin';
 import DefaultLayout from '@/layouts/default/Index';
-import AuthenticationLayout from '@/layouts/authentication/Index';
 Vue.use(VueRouter);
 
 const routes = [

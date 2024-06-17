@@ -3,26 +3,22 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
-  computed: {
-    ...mapState(
-      ['API_URL', 'HOST_URL'],
-    )
-  },
   created(){
     // 쿼리의 code값 가져오기
     let code = this.$route.query.code;
-    this.getToken(code);
+    this.getAccessToken(code);
   },
   methods: {
     ...mapMutations(
-      'authApp', [
+      'authStore', [
         'loginFromKakao'
       ]
     ),
-    getToken(code) {
+    // accessToken 가져오기
+    getAccessToken(code) {
       // 카카오 로그인 처리
       this.loginFromKakao(code);
     }
