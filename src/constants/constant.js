@@ -1,4 +1,5 @@
 // 해당 파일은 상수 언어를 관리
+// ~~~
 
 const Constant = {
   HOST_URL: `${process.env.VUE_APP_HOST_URL}`,
